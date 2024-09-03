@@ -27,7 +27,10 @@ export default function Calculator() {
   }, [formula]);
 
   const onNumberClick = (value: string) => {
-    setBuffer((prev) => [...prev, value]);
+    setBuffer((prev) => {
+      if (value === "." && prev.includes(".")) return prev;
+      return [...prev, value];
+    });
   };
 
   const onOperatorClick = (value: Operator) => {
