@@ -6,15 +6,15 @@ import CircleButton from "./components/button";
 type Operator = "+" | "-" | "x" | "/" | "=";
 
 export default function Calculator() {
-  const [pushed, setPushed] = useState<string[]>([]);
-  const [history, setHistory] = useState<(number | Operator)[]>([]);
-  const pushedNumber = useMemo(
-    () => (pushed.length ? parseFloat(pushed.join("")) : undefined),
-    [pushed]
+  const [buffer, setBuffer] = useState<string[]>([]);
+  const [formula, setFormula] = useState<(number | Operator)[]>([]);
+  const operand = useMemo(
+    () => parseFloat(buffer.join("")) || undefined,
+    [buffer]
   );
   const calculated = useMemo(() => {
-    if (!history.length) return 0;
-    const copied = [...history];
+    if (!formula.length) return 0;
+    const copied = [...formula];
     while (copied.length > 3) {
       const [num1, operator, num2] = copied.splice(0, 3);
       if (typeof num1 !== "number" || typeof num2 !== "number") break;
@@ -24,40 +24,38 @@ export default function Calculator() {
       else if (operator === "/") copied.unshift(num1 / num2);
     }
     return copied[0];
-  }, [history]);
+  }, [formula]);
 
   const onNumberClick = (value: string) => {
-    setPushed((prev) => [...prev, value]);
+    setBuffer((prev) => [...prev, value]);
   };
 
   const onOperatorClick = (value: Operator) => {
-    if (pushedNumber) setHistory((prev) => [...prev, pushedNumber, value]);
-    else if (history.length) {
-      if (value === "=" && history.length > 3)
-        setHistory((prev) => [
+    if (operand) setFormula((prev) => [...prev, operand, value]);
+    else if (formula.length) {
+      if (value === "=" && formula.length > 3)
+        setFormula((prev) => [
           ...prev.slice(0, -1),
           prev[prev.length - 3],
           prev[prev.length - 2],
           "=",
         ]);
-      setHistory((prev) => prev.slice(0, -1).concat(value));
+      setFormula((prev) => prev.slice(0, -1).concat(value));
     }
-    setPushed([]);
+    setBuffer([]);
   };
 
   const onClearClick = () => {
-    setPushed([]);
-    setHistory([]);
+    setBuffer([]);
+    setFormula([]);
   };
 
   return (
     <>
       <div className="flex justify-center">
         <div className="block p-10 space-y-10 text-3xl text-gray-700 font-bold">
-          <h1 className="text-center">Calculator</h1>
-          <h3 className="text-center">
-            {pushedNumber ? pushedNumber : calculated}
-          </h3>
+          <h1 className="text-center">電卓</h1>
+          <h3 className="text-center">{operand ? operand : calculated}</h3>
           <div className="grid grid-cols-4 gap-5">
             <CircleButton value={7} onClick={() => onNumberClick("7")} />
             <CircleButton value={8} onClick={() => onNumberClick("8")} />
@@ -79,7 +77,7 @@ export default function Calculator() {
           </div>
         </div>
       </div>
-      <p className="text-center text-xl text-gray-700">{history.join(" ")}</p>
+      <p className="text-center text-xl text-gray-700">{formula.join(" ")}</p>
     </>
   );
 }
