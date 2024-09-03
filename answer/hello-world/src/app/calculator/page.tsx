@@ -34,16 +34,24 @@ export default function Calculator() {
   };
 
   const onOperatorClick = (value: Operator) => {
-    if (operand) setFormula((prev) => [...prev, operand, value]);
-    else if (formula.length) {
-      if (value === "=" && formula.length > 3)
-        setFormula((prev) => [
-          ...prev.slice(0, -1),
-          prev[prev.length - 3],
-          prev[prev.length - 2],
-          "=",
-        ]);
-      setFormula((prev) => prev.slice(0, -1).concat(value));
+    if (operand)
+      setFormula((prev) => {
+        if (prev.length > 3 && prev[prev.length - 1] === "=")
+          return [operand, value];
+        return [...prev, operand, value];
+      });
+    else {
+      setFormula((prev) => {
+        if (!prev.length) return prev;
+        if (value === "=" && prev.length > 3)
+          return [
+            ...prev.slice(0, -1),
+            prev[prev.length - 3],
+            prev[prev.length - 2],
+            "=",
+          ];
+        return prev.slice(0, -1).concat(value);
+      });
     }
     setBuffer([]);
   };

@@ -423,6 +423,7 @@ export default function Calculator() {
 - 数字と演算子を交互に保持する.
 - 演算子が連続で押された場合は, 最後の演算子を上書きする.
 - (余裕があれば) `=` の連続入力を実装する.
+- (余裕があれば) `=` の後に数字を入力した場合は, 新しい計算式を開始する.
 
 ```tsx
 // src/app/calculator/page.tsx
@@ -439,8 +440,11 @@ export default function Calculator() {
     // 数字と演算子を交互に保持
     if (operand) setFormula((prev) => [...prev, operand, value]);
     // 演算子が連続で押された場合は, 最後の演算子を上書き
-    else if (formula.length) {
-      setFormula((prev) => prev.slice(0, -1).concat(value));
+    else {
+      setFormula((prev) => {
+        if (!prev.length) return prev;
+        return prev.slice(0, -1).concat(value);
+      });
     }
     setBuffer([]);
   };
@@ -506,3 +510,41 @@ export default function Calculator() {
 以下にアクセスして動作確認.
 
 [http://localhost:3000/calculator](http://localhost:3000/calculator)
+
+### 余裕があればシリーズの解答例
+
+```tsx
+const onNumberClick = (value: string) => {
+  setBuffer((prev) => {
+    // . を複数回入力できないようにする.
+    if (value === "." && prev.includes(".")) return prev;
+    return [...prev, value];
+  });
+};
+
+const onOperatorClick = (value: Operator) => {
+  if (operand)
+    setFormula((prev) => {
+      // = の後に数字を入力した場合は, 新しい計算式を開始する.
+      if (prev.length > 3 && prev[prev.length - 1] === "=")
+        return [operand, value];
+      return [...prev, operand, value];
+    });
+  else {
+    setFormula((prev) => {
+      if (!prev.length) return prev;
+      // = の連続入力を実装する.
+      if (value === "=" && prev.length > 3)
+        return [
+          // 一つ前の計算を = の前に挿入する
+          ...prev.slice(0, -1),
+          prev[prev.length - 3],
+          prev[prev.length - 2],
+          "=",
+        ];
+      return prev.slice(0, -1).concat(value);
+    });
+  }
+  setBuffer([]);
+};
+```
