@@ -1,6 +1,6 @@
 # React Hooks
 
-React Hooks は、関数コンポーネントで状態やライフサイクルを扱う方法. いくつかの組み込みのフックがあり、カスタムフックを作成することもできる.
+React Hooks は, 関数コンポーネントで状態やライフサイクルを扱う方法. いくつかの組み込みのフックがあり, カスタムフックを作成することもできる.
 
 ## 全体像
 
@@ -15,9 +15,9 @@ React Hooks は、関数コンポーネントで状態やライフサイクル�
 
 ## useState
 
-`useState` フックは、関数コンポーネントで状態を管理するためのフック. 状態を保持するための変数と、その変数のセッターを返す.<br/>
-`useState`の引数には、状態の初期値を渡す.<br/>
-セッターは、新しい値を引数に取り、状態を更新する. 更新する際に以前の値にアクセスする場合は、関数を引数に取る.
+`useState` フックは, 関数コンポーネントで状態を管理するためのフック. 状態を保持するための変数と, その変数のセッターを返す.<br/>
+`useState`の引数には, 状態の初期値を渡す.<br/>
+セッターは, 新しい値を引数に取り, 状態を更新する. 更新する際に以前の値にアクセスする場合は, 関数を引数に取る.
 
 ```tsx
 import { useState } from "react";
@@ -37,10 +37,10 @@ export default function Counter() {
 
 ## useEffect
 
-`useEffect` フックは、関数コンポーネントでライフサイクルを管理するためのフック. マウント時や値の変更時の処理を記述できる.<br/>
-第一引数には、副作用を行う関数を渡す. 第二引数には、依存する値の配列を渡す. 依存する値が変更された場合に副作用を実行する.<br/>
-クリーンアップ関数を返すことで、コンポーネントがアンマウントされた際に副作用をクリーンアップできる.<br/>
-インタラクティブな画面を作りたい時や、API からデータを取得する際に使用する.
+`useEffect` フックは, 関数コンポーネントでライフサイクルを管理するためのフック. マウント時や値の変更時の処理を記述できる.<br/>
+第一引数には, 副作用を行う関数を渡す. 第二引数には, 依存する値の配列を渡す. 依存する値が変更された場合に副作用を実行する.<br/>
+クリーンアップ関数を返すことで, コンポーネントがアンマウントされた際に副作用をクリーンアップできる.<br/>
+インタラクティブな画面を作りたい時や, API からデータを取得する際に使用する.
 
 ```tsx
 import { useEffect, useState } from "react";
@@ -70,7 +70,7 @@ export default function Timer() {
 
 ## useRef
 
-`useRef` フックは、DOM 要素や値を参照するためのフック. JavaScript から直接 DOM を操作したい場合に使用する.<br/>
+`useRef` フックは, DOM 要素や値を参照するためのフック. JavaScript から直接 DOM を操作したい場合に使用する.<br/>
 要素外のクリックや Esc キーなどのイベントを監視する際に使用する.
 
 ```tsx
@@ -89,8 +89,8 @@ export default function Focus() {
 
 ## useMemo
 
-`useMemo` フックは、計算コストの高い値をキャッシュするためのフック. `useState` + `useEffect` の組み合わせ.<br/>
-一旦、`useState` + `useEffect` で実装してみて、リファクタの際に `useMemo` を使えるか検討すると楽かも.
+`useMemo` フックは, 計算コストの高い値をキャッシュするためのフック. `useState` + `useEffect` の組み合わせ.<br/>
+一旦, `useState` + `useEffect` で実装してみて, リファクタの際に `useMemo` を使えるか検討すると楽かも.
 
 ```tsx
 import { useMemo, useState } from "react";
@@ -112,9 +112,9 @@ export default function Memo() {
 
 ## useContext
 
-`useContext` フックは、コンテキストを利用するためのフック. コンテキストを使うと大域的にアクセスできる変数を記述できる.<br/>
-`Provider`の中のコンポーネントは、`useContext` フックを使ってコンテキストの値にアクセスできる.逆に言えば、`Provider`の外のコンポーネントはアクセスできない.<br/>
-認証情報やドロワー、テーマなどの情報を色々な画面で共有する際に使用する.
+`useContext` フックは, コンテキストを利用するためのフック. コンテキストを使うと大域的にアクセスできる変数を記述できる.<br/>
+`Provider`の中のコンポーネントは, `useContext` フックを使ってコンテキストの値にアクセスできる.逆に言えば, `Provider`の外のコンポーネントはアクセスできない.<br/>
+認証情報やドロワー, テーマなどの情報を色々な画面で共有する際に使用する.
 
 ```tsx
 import { createContext, useContext } from "react";
@@ -138,9 +138,9 @@ function Child() {
 
 ## useReducer
 
-`useReducer` フックは、複雑な状態管理を行うためのフック. `useState` と同じように状態を管理できるが、複数の状態をまとめて管理できる.<br/>
-`useReducer` は、状態とアクションを受け取り、新しい状態を返す関数を渡す.<br/>
-よりインタラクティブな画面を作りたい時や、状態が複雑になってきた時に使用する.
+`useReducer` フックは, 複雑な状態管理を行うためのフック. `useState` と同じように状態を管理できるが, 複数の状態をまとめて管理できる.<br/>
+`useReducer` は, 状態とアクションを受け取り, 新しい状態を返す関数を渡す.<br/>
+よりインタラクティブな画面を作りたい時や, 状態が複雑になってきた時に使用する.
 
 ```tsx
 import { useReducer } from "react";
@@ -183,7 +183,7 @@ export default function Reducer() {
 
 ## カスタムフック
 
-カスタムフックは、フックを使ってロジックを共有するための方法. フックを使ってロジックを共有することで、コードの再利用性を高めることができる. カスタムフックは、`use` で始まる名前をつけることが推奨されている.<br/>
+カスタムフックは, フックを使ってロジックを共有するための方法. フックを使ってロジックを共有することで, コードの再利用性を高めることができる. カスタムフックは, `use` で始まる名前をつけることが推奨されている.<br/>
 よくやるのは`useContext` + `useReducer` を組み合わせ.
 
 ```tsx
@@ -331,7 +331,7 @@ $ npm run dev
 
 以下の実装をする.
 
-- `useState` を使って、入力された数値を保持できるようにする.
+- `useState` を使って, 入力された数値を保持できるようにする.
 - (余裕があれば) `.`を複数回入力できないようにする.
 
 ```tsx
@@ -366,7 +366,7 @@ export default function Calculator() {
 }
 ```
 
-`useEffect` を使って、`buffer` の値を結合して数値に変換する.
+`useEffect` を使って, `buffer` の値を結合して数値に変換する.
 
 ```tsx
 // src/app/calculator/page.tsx
@@ -394,7 +394,7 @@ export default function Calculator() {
 }
 ```
 
-`useMemo`を使って、リファクタする.
+`useMemo`を使って, リファクタする.
 
 ```tsx
 // src/app/calculator/page.tsx
@@ -421,7 +421,7 @@ export default function Calculator() {
 計算式を保持する際に以下の点に注意する.
 
 - 数字と演算子を交互に保持する.
-- 演算子が連続で押された場合は、最後の演算子を上書きする.
+- 演算子が連続で押された場合は, 最後の演算子を上書きする.
 - (余裕があれば) `=` の連続入力を実装する.
 
 ```tsx
@@ -438,7 +438,7 @@ export default function Calculator() {
   const onOperatorClick = (value: Operator) => {
     // 数字と演算子を交互に保持
     if (operand) setFormula((prev) => [...prev, operand, value]);
-    // 演算子が連続で押された場合は、最後の演算子を上書き
+    // 演算子が連続で押された場合は, 最後の演算子を上書き
     else if (formula.length) {
       setFormula((prev) => prev.slice(0, -1).concat(value));
     }
@@ -469,7 +469,7 @@ export default function Calculator() {
 
 1. 最初の 3 つの値を計算する
 2. その結果を先頭に追加する
-3. 1. 2. を繰り返し、式の配列が 3 より小さくなるまで続ける
+3. 1. 2. を繰り返し, 式の配列が 3 より小さくなるまで続ける
 
 ```tsx
 // src/app/calculator/page.tsx

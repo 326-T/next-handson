@@ -9,7 +9,7 @@ React は ウェブアプリケーションのフロントエンドを構築す�
 npx create-next-app hello-world
 ```
 
-以下の順に質問されるので、回答する.
+以下の順に質問されるので, 回答する.
 
 | 質問                                                                      | 回答 |
 | ------------------------------------------------------------------------- | ---- |
@@ -21,7 +21,7 @@ npx create-next-app hello-world
 | ✔ Would you like to use App Router? (recommended) … No / Yes              | Yes  |
 | ✔ Would you like to customize the default import alias (@/\*)? … No / Yes | No   |
 
-作成したら、以下のコマンドでディレクトリに移動する.
+作成したら, 以下のコマンドでディレクトリに移動する.
 
 ```bash
 cd hello-world
@@ -62,7 +62,7 @@ NextJS 13 で導入されたルーティング機能.
 | `src/app/<任意のサブディレクトリ>/layout.tsx` | サブパスで共通のレイアウト             |
 | `src/app/<任意のサブディレクトリ>/page.tsx`   | サブパスで表示するページ               |
 
-基本的に`page.tsx`を作成、編集していけば新しいページを作成できる.
+基本的に`page.tsx`を作成, 編集していけば新しいページを作成できる.
 
 ### 新しいページを作成してみる
 
@@ -78,9 +78,10 @@ NextJS 13 で導入されたルーティング機能.
    }
    ```
 3. ブラウザで以下の URL にアクセスする.
+
    [http://localhost:3000/hello](http://localhost:3000/hello)
 
-デフォルトの CSS が影響して見た目が悪いので、`globals.css`を編集して見た目を整える.
+デフォルトの CSS が影響して見た目が悪いので, `globals.css`を編集して見た目を整える.
 
 ```css
 /* src/app/globals.css */
@@ -122,7 +123,7 @@ body {
 
 ### サブパスのページを作成してみる
 
-先ほどと同様に`src/app/hello/child`ディレクトリを作成し、`page.tsx`を作成する.
+先ほどと同様に`src/app/hello/child`ディレクトリを作成し, `page.tsx`を作成する.
 
 ```tsx
 // src/app/hello/child/page.tsx
@@ -132,6 +133,7 @@ export default function Child() {
 ```
 
 ブラウザで以下の URL にアクセスする.
+
 [http://localhost:3000/hello/child](http://localhost:3000/hello/child)
 
 ### サブパスで共通のレイアウトを作成してみる
@@ -183,9 +185,10 @@ export default function Name() {
 }
 ```
 
-`use client`は NextJS 13 で導入されたクライアントサイドのみで実行されるコードを指定するディレクティブ. 簡単に言うと、ユーザのアクセスや操作によって動的に変化するコンテンツに使用する.
+`use client`は NextJS 13 で導入されたクライアントサイドのみで実行されるコードを指定するディレクティブ. 簡単に言うと, ユーザのアクセスや操作によって動的に変化するコンテンツに使用する.
 
 ブラウザで以下の URL にアクセスする.
+
 [http://localhost:3000/hello/John](http://localhost:3000/hello/John)
 
 ### クエリパラメータを取得してみる
