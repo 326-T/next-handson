@@ -380,7 +380,7 @@ export default function Calculator() {
   const [operand, setOperand] = useState<number | undefined>(undefined);
 
   useEffect(() => {
-    const value = parseFloat(buffer.join(""));
+    const (buffer === "" ? undefined : Number(buffer));
     setOperand(value || undefined);
   }, [buffer]);
 
@@ -405,7 +405,10 @@ import { useMemo, useState } from "react";
 export default function Calculator() {
   // 省略
 
-  const operand = useMemo(() => parseFloat(buffer) || undefined, [buffer]);
+  const operand = useMemo(
+    () => (buffer === "" ? undefined : Number(buffer)),
+    [buffer]
+  );
 }
 ```
 
@@ -471,6 +474,7 @@ export default function Calculator() {
 1. 最初の 3 つの値を計算する
 2. その結果を先頭に追加する
 3. 1. 2. を繰り返し, 式の配列が 3 より小さくなるまで続ける
+4. (余裕があれば) 0 除算を防ぐ
 
 ```tsx
 // src/app/calculator/page.tsx
@@ -511,6 +515,24 @@ export default function Calculator() {
 ### 余裕があればシリーズの解答例
 
 ```tsx
+const calculated: number | string = useMemo(() => {
+  if (!formula.length) return 0;
+  const copied = [...formula];
+  while (copied.length > 3) {
+    const [num1, operator, num2] = copied.splice(0, 3);
+    if (typeof num1 !== "number" || typeof num2 !== "number") break;
+    if (operator === "+") copied.unshift(num1 + num2);
+    else if (operator === "-") copied.unshift(num1 - num2);
+    else if (operator === "x") copied.unshift(num1 * num2);
+    else if (operator === "/") {
+      // 0除算を防ぐ
+      if (num2 === 0) return "エラー";
+      copied.unshift(num1 / num2);
+    }
+  }
+  return copied[0];
+}, [formula]);
+
 const onNumberClick = (value: string) => {
   setBuffer((prev) => {
     // . を複数回入力できないようにする.

@@ -8,8 +8,11 @@ type Operator = "+" | "-" | "x" | "/" | "=";
 export default function Calculator() {
   const [buffer, setBuffer] = useState<string>("");
   const [formula, setFormula] = useState<(number | Operator)[]>([]);
-  const operand = useMemo(() => parseFloat(buffer) || undefined, [buffer]);
-  const calculated = useMemo(() => {
+  const operand = useMemo(
+    () => (buffer === "" ? undefined : Number(buffer)),
+    [buffer]
+  );
+  const calculated: number | string = useMemo(() => {
     if (!formula.length) return 0;
     const copied = [...formula];
     while (copied.length > 3) {
@@ -18,7 +21,10 @@ export default function Calculator() {
       if (operator === "+") copied.unshift(num1 + num2);
       else if (operator === "-") copied.unshift(num1 - num2);
       else if (operator === "x") copied.unshift(num1 * num2);
-      else if (operator === "/") copied.unshift(num1 / num2);
+      else if (operator === "/") {
+        if (num2 === 0) return "エラー";
+        copied.unshift(num1 / num2);
+      }
     }
     return copied[0];
   }, [formula]);
@@ -30,7 +36,7 @@ export default function Calculator() {
   };
 
   const onOperatorClick = (value: Operator) => {
-    if (operand)
+    if (operand !== undefined)
       setFormula((prev) => {
         if (prev.length > 1 && prev[prev.length - 1] === "=")
           return [operand, value];
