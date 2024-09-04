@@ -6,12 +6,9 @@ import CircleButton from "./components/button";
 type Operator = "+" | "-" | "x" | "/" | "=";
 
 export default function Calculator() {
-  const [buffer, setBuffer] = useState<string[]>([]);
+  const [buffer, setBuffer] = useState<string>("");
   const [formula, setFormula] = useState<(number | Operator)[]>([]);
-  const operand = useMemo(
-    () => parseFloat(buffer.join("")) || undefined,
-    [buffer]
-  );
+  const operand = useMemo(() => parseFloat(buffer) || undefined, [buffer]);
   const calculated = useMemo(() => {
     if (!formula.length) return 0;
     const copied = [...formula];
@@ -27,16 +24,15 @@ export default function Calculator() {
   }, [formula]);
 
   const onNumberClick = (value: string) => {
-    setBuffer((prev) => {
-      if (value === "." && prev.includes(".")) return prev;
-      return [...prev, value];
-    });
+    setBuffer((prev) =>
+      value === "." && prev.includes(".") ? prev : prev + value
+    );
   };
 
   const onOperatorClick = (value: Operator) => {
     if (operand)
       setFormula((prev) => {
-        if (prev.length > 3 && prev[prev.length - 1] === "=")
+        if (prev.length > 1 && prev[prev.length - 1] === "=")
           return [operand, value];
         return [...prev, operand, value];
       });
@@ -53,11 +49,11 @@ export default function Calculator() {
         return prev.slice(0, -1).concat(value);
       });
     }
-    setBuffer([]);
+    setBuffer("");
   };
 
   const onClearClick = () => {
-    setBuffer([]);
+    setBuffer("");
     setFormula([]);
   };
 

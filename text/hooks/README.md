@@ -342,18 +342,18 @@ import { useState } from "react";
 
 export default function Calculator() {
   // 入力を文字の配列で保持
-  const [buffer, setBuffer] = useState<string[]>([]);
+  const [buffer, setBuffer] = useState<string>("");
 
   // 省略
 
   const onNumberClick = (value: string) => {
-    setBuffer((prev) => [...prev, value]);
+    setBuffer((prev) => prev + value);
   };
 
   // 省略
 
   const onClearClick = () => {
-    setBuffer([]);
+    setBuffer("");
   };
 
   return (
@@ -405,10 +405,7 @@ import { useMemo, useState } from "react";
 export default function Calculator() {
   // 省略
 
-  const operand = useMemo(
-    () => parseFloat(buffer.join("")) || undefined,
-    [buffer]
-  );
+  const operand = useMemo(() => parseFloat(buffer) || undefined, [buffer]);
 }
 ```
 
@@ -446,11 +443,11 @@ export default function Calculator() {
         return prev.slice(0, -1).concat(value);
       });
     }
-    setBuffer([]);
+    setBuffer("");
   };
 
   const onClearClick = () => {
-    setBuffer([]);
+    setBuffer("");
     setFormula([]);
   };
 
@@ -517,8 +514,7 @@ export default function Calculator() {
 const onNumberClick = (value: string) => {
   setBuffer((prev) => {
     // . を複数回入力できないようにする.
-    if (value === "." && prev.includes(".")) return prev;
-    return [...prev, value];
+    value === "." && prev.includes(".") ? prev : prev + value;
   });
 };
 
@@ -526,7 +522,7 @@ const onOperatorClick = (value: Operator) => {
   if (operand)
     setFormula((prev) => {
       // = の後に数字を入力した場合は, 新しい計算式を開始する.
-      if (prev.length > 3 && prev[prev.length - 1] === "=")
+      if (prev.length > 1 && prev[prev.length - 1] === "=")
         return [operand, value];
       return [...prev, operand, value];
     });
@@ -545,6 +541,6 @@ const onOperatorClick = (value: Operator) => {
       return prev.slice(0, -1).concat(value);
     });
   }
-  setBuffer([]);
+  setBuffer("");
 };
 ```
